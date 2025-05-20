@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="464.0" prefWidth="687.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.groupchat.controller.ClientController">
+   <children>
+      <ScrollPane fx:id="scrollBasePane" layoutX="30.052174909912605" layoutY="97.0" prefHeight="270.0" prefWidth="630.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="96.0">
+         <content>
+            <VBox fx:id="scrollbodyVBox" prefHeight="270.0" prefWidth="614.0" />
+         </content>
+      </ScrollPane>
+      <Label layoutX="294.0" layoutY="50.0" text="Client" AnchorPane.topAnchor="37.0">
+         <font>
+            <Font name="Consolas Bold" size="30.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtField" layoutX="95.0" layoutY="403.0" prefHeight="35.0" prefWidth="488.0" promptText="Enter Message">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <Button fx:id="btnSend" layoutX="598.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnSendOnAction" prefHeight="35.0" prefWidth="58.0" style="-fx-background-color: #009432; -fx-background-radius: 6;" text="Send" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <Button layoutX="-175.0" layoutY="283.0" mnemonicParsing="false" text="Button" />
+      <Button fx:id="btnAttachFiles" alignment="CENTER" layoutX="35.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnAttachFilesOnAction" prefHeight="35.0" prefWidth="43.0" style="-fx-background-radius: 6;" text="+">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
