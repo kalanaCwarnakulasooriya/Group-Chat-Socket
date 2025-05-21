@@ -4,5 +4,6 @@ module lk.ijse.groupchat {
 
 
     opens lk.ijse.groupchat to javafx.fxml;
+    opens lk.ijse.groupchat.controller to javafx.fxml;
     exports lk.ijse.groupchat;
 }
