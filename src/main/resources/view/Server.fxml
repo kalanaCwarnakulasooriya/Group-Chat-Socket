@@ -7,13 +7,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="464.0" prefWidth="687.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.groupchat.controller.ServerController">
    <children>
-      <TextArea fx:id="txtArea" layoutX="60.0" layoutY="96.0" prefHeight="275.0" prefWidth="576.0" style="-fx-border-color: black;" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" />
-      <Label layoutX="312.0" layoutY="44.0" text="Server">
+      <TextArea fx:id="txtArea" layoutX="60.0" layoutY="96.0" prefHeight="275.0" prefWidth="576.0" style="-fx-border-color: black;" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="96.0" />
+      <Label layoutX="294.0" layoutY="37.0" text="Server" AnchorPane.topAnchor="37.0">
          <font>
-            <Font name="Consolas Bold" size="24.0" />
+            <Font name="Consolas Bold" size="30.0" />
          </font>
       </Label>
       <Button layoutX="522.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnAddUsersOnAction" prefHeight="28.0" prefWidth="104.0" style="-fx-background-radius: 10; -fx-background-color: #0180ff;" text="Add Users" textFill="WHITE">

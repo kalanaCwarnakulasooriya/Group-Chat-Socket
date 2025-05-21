@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="502.0" prefWidth="421.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.groupchat.controller.LoginController">
+<AnchorPane fx:id="rootNode" prefHeight="502.0" prefWidth="421.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.groupchat.controller.LoginController">
    <children>
       <Label layoutX="97.0" layoutY="82.0" text="Login to Chat">
          <font>
