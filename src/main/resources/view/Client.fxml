@@ -12,7 +12,7 @@
    <children>
       <ScrollPane fx:id="scrollBasePane" layoutX="30.052174909912605" layoutY="97.0" prefHeight="270.0" prefWidth="630.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="96.0">
          <content>
-            <VBox fx:id="scrollbodyVBox" prefHeight="270.0" prefWidth="614.0" />
+            <VBox fx:id="scrollbodyVBox" prefHeight="270.0" prefWidth="612.0" />
          </content>
       </ScrollPane>
       <Label layoutX="294.0" layoutY="50.0" text="Client" AnchorPane.topAnchor="37.0">
