@@ -115,7 +115,8 @@ public class ClientController {
 
     private void displayImage(Image image, String alignment, String sender) {
         ImageView imageView = new ImageView(image);
-        imageView.setFitWidth(image.getWidth());
+        imageView.setFitWidth(200);
+        imageView.setFitHeight(200);
         imageView.setPreserveRatio(true);
         imageView.setSmooth(true);
 
@@ -126,7 +127,7 @@ public class ClientController {
         container.setStyle("-fx-padding: 10;");
 
         if(alignment.equals("right")){
-            container.setStyle("-fx-padding: 10; -fx-arc-height: 20; -fx-arc-width: 2 -fx-alignment: center-right;");
+            container.setStyle("-fx-padding: 10; -fx-alignment: center-right;");
         }else{
             container.setStyle("-fx-padding: 10; -fx-alignment: center-left;");
         }
@@ -172,11 +173,6 @@ public class ClientController {
 
     private void sendMessage() {
         if (socket == null || socket.isClosed()) return;
-
-        if (txtField.getText().isEmpty()) {
-            new Alert(Alert.AlertType.WARNING, "Please Enter Message!").show();
-            return;
-        }
 
         String message = txtField.getText();
         try{
