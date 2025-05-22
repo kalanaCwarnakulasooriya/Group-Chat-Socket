@@ -1,6 +1,7 @@
 module lk.ijse.groupchat {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.desktop;
 
 
     opens lk.ijse.groupchat to javafx.fxml;

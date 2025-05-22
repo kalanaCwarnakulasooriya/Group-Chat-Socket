@@ -20,18 +20,18 @@
             <Font name="Consolas Bold" size="30.0" />
          </font>
       </Label>
-      <TextField fx:id="txtField" layoutX="95.0" layoutY="403.0" prefHeight="35.0" prefWidth="488.0" promptText="Enter Message">
+      <TextField fx:id="txtField" layoutX="95.0" layoutY="403.0" onKeyReleased="#btnEnter" prefHeight="35.0" prefWidth="488.0" promptText="Enter Message">
          <font>
             <Font size="14.0" />
          </font>
       </TextField>
-      <Button fx:id="btnSend" layoutX="598.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnSendOnAction" prefHeight="35.0" prefWidth="58.0" style="-fx-background-color: #009432; -fx-background-radius: 6;" text="Send" textFill="WHITE">
+      <Button layoutX="598.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnSendOnAction" prefHeight="35.0" prefWidth="58.0" style="-fx-background-color: #009432; -fx-background-radius: 6;" text="Send" textFill="WHITE">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
       <Button layoutX="-175.0" layoutY="283.0" mnemonicParsing="false" text="Button" />
-      <Button fx:id="btnAttachFiles" alignment="CENTER" layoutX="35.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnAttachFilesOnAction" prefHeight="35.0" prefWidth="43.0" style="-fx-background-radius: 6;" text="+">
+      <Button alignment="CENTER" layoutX="35.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnAttachFilesOnAction" prefHeight="35.0" prefWidth="43.0" style="-fx-background-radius: 6;" text="+">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

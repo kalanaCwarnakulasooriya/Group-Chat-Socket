@@ -6,7 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
@@ -21,14 +20,14 @@ public class ServerController {
 
     public TextField txtName;
 
-    public static String userName = "";
     private ServerSocket serverSocket;
     private List<ClientHandler> clients = new ArrayList<>();
+    private File file;
 
     public void initialize() {
         new Thread(() -> {
             try {
-                serverSocket = new ServerSocket(5000);
+                serverSocket = new ServerSocket(8000);
 
                 while (true) {
                     Socket socket = serverSocket.accept();
@@ -36,8 +35,9 @@ public class ServerController {
                     clients.add(clientHandler);
                     new Thread(clientHandler).start();
                 }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }).start();
     }
@@ -52,82 +52,81 @@ public class ServerController {
         openClientWindow();
     }
 
-    class ClientHandler implements Runnable{
+    class ClientHandler implements Runnable {
         private Socket socket;
-        private DataInputStream dataInputStream;
-        private DataOutputStream dataOutputStream;
+        private DataInputStream dis;
+        private DataOutputStream dos;
         private String clientId;
 
         public ClientHandler(Socket socket) {
             this.socket = socket;
             try {
-                dataInputStream = new DataInputStream(socket.getInputStream());
-                dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                dis = new DataInputStream(socket.getInputStream());
+                dos = new DataOutputStream(socket.getOutputStream());
 
                 clientId = txtName.getText();
-                dataOutputStream.writeUTF(clientId);
+                txtName.clear();
+                dos.writeUTF(clientId);
+
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         }
 
-        public void sendText(String text, String sender) {
+        public void sendText(String sender, String text) {
             try {
-                dataOutputStream.writeUTF("text");
-                dataOutputStream.writeUTF(sender + ": " + text);
-                dataOutputStream.flush();
+                dos.writeUTF("text");
+                dos.writeUTF(sender + " : " + text);
+                dos.flush();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         }
 
-        public void sendImage(byte[] image, String sender) throws IOException {
-            dataOutputStream.writeUTF("image");
-            dataOutputStream.writeUTF(sender);
-            dataOutputStream.writeInt(image.length);
-            dataOutputStream.write(image);
-            dataOutputStream.flush();
+        public void sendImage(String sender,byte[] imageBytes) throws IOException {
+            dos.writeUTF("image");
+            dos.writeUTF(sender);
+            dos.writeInt(imageBytes.length);
+            dos.write(imageBytes);
+            dos.flush();
         }
 
-        public void sendFile(byte[] file, String sender, String fileName) throws IOException {
-            dataOutputStream.writeUTF("file");
-            dataOutputStream.writeUTF(sender);
-            dataOutputStream.writeUTF(fileName);
-            dataOutputStream.writeInt(file.length);
-            dataOutputStream.write(file);
-            dataOutputStream.flush();
+        public void sendFile(String sender,String fileName, byte[] fileBytes) throws IOException {
+            dos.writeUTF("file");
+            dos.writeUTF(sender);
+            dos.writeUTF(fileName);
+            dos.writeInt(fileBytes.length);
+            dos.write(fileBytes);
+            dos.flush();
         }
 
         @Override
         public void run() {
-            try{
+            try {
                 while (true) {
-                    String type = dataInputStream.readUTF();
+                    String type = dis.readUTF();
 
-                    switch (type){
-                        case "text" ->{
-                            String text = dataInputStream.readUTF();
-                            String msg = clientId + " : " + text;
+                    switch (type) {
+                        case "text" -> {
+                            String text = dis.readUTF();
                             broadcastMessage(text, this);
                         }
-
-                        case "image" ->{
-                            int length = dataInputStream.readInt();
+                        case "image" -> {
+                            int length = dis.readInt();
                             byte[] bytes = new byte[length];
-                            dataInputStream.readFully(bytes);
-                            Image image = new Image(new ByteArrayInputStream(bytes));
-                            broadcastImage(bytes, this);
+                            dis.readFully(bytes);
+                            broadcastImage(bytes,this);
                         }
-
-                        case "file" ->{
-                            String fileName = dataInputStream.readUTF();
-                            int length = dataInputStream.readInt();
+                        case "file" -> {
+                            String fileName = dis.readUTF();
+                            int length = dis.readInt();
                             byte[] bytes = new byte[length];
-                            dataInputStream.readFully(bytes);
-                            File recived = new File("recived_" + fileName);
-                            try (FileOutputStream fileOutputStream = new FileOutputStream(recived)) {
-                                fileOutputStream.write(bytes);
-                                broadcastFile(bytes, this, fileName);
+                            dis.readFully(bytes);
+
+                            File received = new File("received_" + fileName);
+                            try (FileOutputStream fos = new FileOutputStream(received)) {
+                                fos.write(bytes);
+                                broadcastFile(fileName, bytes, this);
                             }
                         }
                     }
@@ -141,38 +140,36 @@ public class ServerController {
     private void broadcastMessage(String message, ClientHandler sender) {
         for (ClientHandler client : clients) {
             if (client != sender) {
-                client.sendText(message, sender.clientId);
+                client.sendText(sender.clientId, message);
             }
         }
     }
 
-    private void broadcastImage(byte[] image, ClientHandler sender) throws IOException {
-        try {
+    private void broadcastImage(byte[] imageBytes, ClientHandler sender) {
+        try{
             for (ClientHandler client : clients) {
                 if (client != sender) {
-                    client.sendImage(image, sender.clientId);
+                    client.sendImage(sender.clientId,imageBytes);
                 }
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
-    private void broadcastFile(byte[] file, ClientHandler sender, String fileName) throws IOException {
+    private void broadcastFile(String fileName, byte[] fileBytes, ClientHandler sender) {
         try {
             for (ClientHandler client : clients) {
                 if (client != sender) {
-                    client.sendFile(file, sender.clientId, fileName);
+                    client.sendFile(sender.clientId,fileName, fileBytes);
                 }
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     private void openClientWindow() throws IOException {
-        userName = txtName.getText();
-
         if (txtName.getText().isEmpty()) {
             new Alert(Alert.AlertType.WARNING, "Please Enter Your Name").show();
             return;
