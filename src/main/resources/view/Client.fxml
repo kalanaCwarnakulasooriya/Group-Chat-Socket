@@ -10,9 +10,9 @@
 
 <AnchorPane prefHeight="464.0" prefWidth="687.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.groupchat.controller.ClientController">
    <children>
-      <ScrollPane fx:id="scrollBasePane" layoutX="30.052174909912605" layoutY="97.0" prefHeight="270.0" prefWidth="630.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="96.0">
+      <ScrollPane fx:id="scrollBasePane" layoutX="30.052174909912605" layoutY="109.35652536662641" prefHeight="257.0" prefWidth="627.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="109.0">
          <content>
-            <VBox fx:id="scrollbodyVBox" prefHeight="270.0" prefWidth="612.0" />
+            <VBox fx:id="scrollbodyVBox" prefHeight="257.0" prefWidth="612.0" />
          </content>
       </ScrollPane>
       <Label layoutX="294.0" layoutY="50.0" text="Client" AnchorPane.topAnchor="37.0">
@@ -36,5 +36,10 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Button>
+      <Label fx:id="lblClient" layoutX="35.0" layoutY="72.0" prefHeight="23.0" prefWidth="99.0">
+         <font>
+            <Font name="Consolas Bold" size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

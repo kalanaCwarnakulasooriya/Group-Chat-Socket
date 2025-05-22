@@ -20,6 +20,8 @@ public class ServerController {
 
     public TextField txtName;
 
+    public static String clientName = "";
+
     private ServerSocket serverSocket;
     private List<ClientHandler> clients = new ArrayList<>();
     private File file;
@@ -170,6 +172,7 @@ public class ServerController {
     }
 
     private void openClientWindow() throws IOException {
+        clientName = txtName.getText();
         if (txtName.getText().isEmpty()) {
             new Alert(Alert.AlertType.WARNING, "Please Enter Your Name").show();
             return;

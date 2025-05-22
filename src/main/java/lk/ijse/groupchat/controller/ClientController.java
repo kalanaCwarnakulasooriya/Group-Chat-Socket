@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -19,8 +20,11 @@ import javafx.stage.FileChooser;
 import java.io.*;
 import java.net.Socket;
 
+import static lk.ijse.groupchat.controller.ServerController.clientName;
+
 public class ClientController {
 
+    public Label lblClient;
     @FXML
     private ScrollPane scrollBasePane;
 
@@ -42,6 +46,7 @@ public class ClientController {
                 socket = new Socket("localhost",8000);
                 dos = new DataOutputStream(socket.getOutputStream());
                 dis = new DataInputStream(socket.getInputStream());
+                this.lblClient.setText(clientName);
 
                 while(true){
                     String type = dis.readUTF();
@@ -121,7 +126,7 @@ public class ClientController {
         container.setStyle("-fx-padding: 10;");
 
         if(alignment.equals("right")){
-            container.setStyle("-fx-padding: 10; -fx-alignment: center-right;");
+            container.setStyle("-fx-padding: 10; -fx-arc-height: 20; -fx-arc-width: 2 -fx-alignment: center-right;");
         }else{
             container.setStyle("-fx-padding: 10; -fx-alignment: center-left;");
         }
@@ -167,6 +172,11 @@ public class ClientController {
 
     private void sendMessage() {
         if (socket == null || socket.isClosed()) return;
+
+        if (txtField.getText().isEmpty()) {
+            new Alert(Alert.AlertType.WARNING, "Please Enter Message!").show();
+            return;
+        }
 
         String message = txtField.getText();
         try{
